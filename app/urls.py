@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path,include
 from usersApp.views import UserList,UserDetail,UserModify,UserDelete,UserCreate
 
-#testpipeline
+# test pipeline commit
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/list/', UserList.as_view(), name='user-list'),
