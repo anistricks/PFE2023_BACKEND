@@ -7,26 +7,12 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 #from rest_framework.permissions import IsAdminUser
 # Create your views here.
-
-
-
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
-
-class UserDetail(APIView):
-    def get_object(self, username):
-        return get_object_or_404(User, username=username)
-
-    def get(self, request, username):
-        user = self.get_object(username)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-    
-class UserCreate(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -38,11 +24,14 @@ class UserCreate(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-
-class UserModify(APIView):
+class UserDetail(APIView):
     def get_object(self, username):
         return get_object_or_404(User, username=username)
+
+    def get(self, request, username):
+        user = self.get_object(username)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
     def put(self, request, username):
         user = self.get_object(username)
@@ -52,11 +41,7 @@ class UserModify(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserDelete(APIView):
-    def get_object(self, username):
-        return get_object_or_404(User, username=username)
     def delete(self, request, username):
         user = self.get_object(username)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
