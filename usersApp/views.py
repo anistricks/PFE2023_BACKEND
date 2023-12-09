@@ -15,6 +15,17 @@ class UserList(APIView):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
+
+
+class UserDetail(APIView):
+    def get_object(self, username):
+        return get_object_or_404(User, username=username)
+
+    def get(self, request, username):
+        user = self.get_object(username)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    
 class UserCreate(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -28,14 +39,6 @@ class UserCreate(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserDetail(APIView):
-    def get_object(self, username):
-        return get_object_or_404(User, username=username)
-
-    def get(self, request, username):
-        user = self.get_object(username)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
 
 class UserModify(APIView):
     def get_object(self, username):
@@ -56,3 +59,4 @@ class UserDelete(APIView):
         user = self.get_object(username)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+

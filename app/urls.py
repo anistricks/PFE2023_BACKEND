@@ -16,14 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from usersApp.views import UserList,UserDetail,UserModify,UserDelete,UserCreate
+from usersApp import urls as userUrls
 
 # test pipeline commit
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/list/', UserList.as_view(), name='user-list'),
-    path('user/details/<str:username>/', UserDetail.as_view(), name='user-detail'),
-    path('user/modify/<str:username>/', UserModify.as_view(), name='user-modify'),
-    path('user/delete/<str:username>/', UserDelete.as_view(), name='user-delete'),
-    path('user/create/', UserCreate.as_view(), name='user-create'),
+    path('users/',include(userUrls)),
+   
 ]
