@@ -17,10 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from usersApp import urls as userUrls
-
+from articlesApp import urls as articleUrls
 # test pipeline commit
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/',include(userUrls)),
+     path('articles/', include(articleUrls)),
    
 ]
