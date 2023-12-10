@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Commande, LigneCommande
 from .serializers import CommandeSerializer, LigneCommandeSerializer
-
+from rest_framework.generics import ListAPIView
 class CommandeList(APIView):
     def get(self, request):
         commandes = Commande.objects.all()
@@ -75,3 +75,10 @@ class LigneCommandeDetail(APIView):
         ligne_commande = self.get_object(ligne_commande_id)
         ligne_commande.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ArticlesByCommandeList(ListAPIView):
+    serializer_class = LigneCommandeSerializer
+
+    def get_queryset(self):
+        commande_id = self.kwargs['commande_id']
+        return LigneCommande.objects.filter(commande__id=commande_id)   
