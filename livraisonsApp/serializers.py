@@ -4,9 +4,9 @@ from commandesApp.serializers import CommandeSerializer
 from usersApp.serializers import UserSerializer
 
 class LivraisonSerializer(serializers.ModelSerializer):
-    commande = CommandeSerializer()
+    commandes = CommandeSerializer(many=True)  
     livreur = UserSerializer()
 
     class Meta:
         model = Livraison
-        fields = ['id', 'commande', 'livreur', 'status']
+        fields = ['id', 'commandes', 'livreur', 'status']

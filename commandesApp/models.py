@@ -6,7 +6,6 @@ from articlesApp.models import Article
 
 class Commande(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    livreur = models.ForeignKey(User, on_delete=models.CASCADE)
     date_commande = models.DateTimeField(auto_now_add=True)
     status_choices = [
         ('En cours', 'En cours'),

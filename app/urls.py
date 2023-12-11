@@ -20,13 +20,14 @@ from usersApp import urls as userUrls
 from articlesApp import urls as articleUrls
 from clientsApp import urls as clientUrls
 from commandesApp import urls as commandeUrls
+from livraisonsApp import urls as livraisonUrls
 # test pipeline commit
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/',include(userUrls)),
     path('articles/', include(articleUrls)),
     path('clients/', include(clientUrls)),
-
-    path('commandes/',include(commandeUrls))
+    path('commandes/',include(commandeUrls)),
+    path('livraisons/',include(livraisonUrls))
    
 ]

@@ -14,9 +14,8 @@ class LigneCommandeSerializer(serializers.ModelSerializer):
 
 class CommandeSerializer(serializers.ModelSerializer):
     client = ClientSerializer()
-    livreur = UserSerializer()
     lignes_commande = LigneCommandeSerializer(many=True, read_only=True)
 
     class Meta:
         model = Commande
-        fields = ['id', 'client', 'livreur', 'date_commande', 'status', 'lignes_commande']
+        fields = ['id', 'client', 'date_commande', 'status', 'lignes_commande']
