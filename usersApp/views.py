@@ -5,8 +5,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-#from rest_framework.permissions import IsAdminUser
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
