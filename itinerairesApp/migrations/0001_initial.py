@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Livraison',
+            name='Itineraire',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('status', models.CharField(choices=[('En attente', 'En attente'), ('En cours', 'En cours'), ('Fini', 'Fini')], default='En attente', max_length=20)),

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class LivraisonsappConfig(AppConfig):
+class ItinerairesappConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'livraisonsApp'
+    name = 'itinerairesApp'

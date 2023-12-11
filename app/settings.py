@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'articlesApp',
     'clientsApp',
     'commandesApp',
-    'livraisonsApp',
+    'itinerairesApp',
 
 
 ]

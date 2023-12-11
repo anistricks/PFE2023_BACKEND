@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from .models import Livraison
+from .models import Itineraire
 from commandesApp.serializers import CommandeSerializer
 from usersApp.serializers import UserSerializer
 
-class LivraisonSerializer(serializers.ModelSerializer):
+class ItineraireSerializer(serializers.ModelSerializer):
     commandes = CommandeSerializer(many=True, read_only=True)
     livreur = UserSerializer()
 
     class Meta:
-        model = Livraison
+        model = Itineraire
         fields = ['id', 'commandes', 'livreur', 'status']

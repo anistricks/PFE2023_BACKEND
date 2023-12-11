@@ -7,16 +7,16 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('commandesApp', '0001_initial'),
-        ('livraisonsApp', '0001_initial'),
+        ('itinerairesApp', '0001_initial'),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='livraison',
+            model_name='itineraire',
             name='commande',
         ),
         migrations.AddField(
-            model_name='livraison',
+            model_name='itineraire',
             name='commandes',
             field=models.ManyToManyField(to='commandesApp.commande'),
         ),
