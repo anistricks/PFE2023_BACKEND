@@ -32,10 +32,12 @@ class LivraisonDetail(APIView):
         serializer = LivraisonSerializer(livraison, data=request.data)
         if serializer.is_valid():
             serializer.save()
+
+            # Récupérez les IDs des commandes à ajouter
+            commandes_ids = request.data.get('commandes', [])
+
+            # Ajoutez les commandes à la livraison
+            livraison.commandes.set(commandes_ids)
+
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, livraison_id):
-        livraison = self.get_object(livraison_id)
-        livraison.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
