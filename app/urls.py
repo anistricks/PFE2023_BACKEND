@@ -21,6 +21,7 @@ from articlesApp import urls as articleUrls
 from clientsApp import urls as clientUrls
 from commandesApp import urls as commandeUrls
 from itinerairesApp import urls as itineraireUrls
+from livraisonsApp import urls as livraisonUrls
 # test pipeline commit
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('articles/', include(articleUrls)),
     path('clients/', include(clientUrls)),
     path('commandes/',include(commandeUrls)),
-    path('itineraires/',include(itineraireUrls))
+    path('itineraires/',include(itineraireUrls)),
+    path('livraisons/',include(livraisonUrls))
    
 ]
