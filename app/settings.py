@@ -169,14 +169,11 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Durée de validité du jeton
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),  # Durée de validité du rafraîchissement
-    'SLIDING_TOKEN_LIFETIME': timedelta(days=1),  # Durée de validité du jeton rafraîchi
-    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
-    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
-    'SLIDING_TOKEN_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
-    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
-    'SIGNING_KEY':SECRET_KEY,
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),
+    'SIGNING_KEY': SECRET_KEY,
 }
 
 AUTH_USER_MODEL = 'usersApp.User'
