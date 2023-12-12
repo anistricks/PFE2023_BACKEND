@@ -14,11 +14,16 @@ from pathlib import Path
 import os
 import sys
 from datetime  import timedelta
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 
 # Quick-start development settings - unsuitable for production
 
@@ -32,7 +37,9 @@ SECRET_KEY ='django-insecure-4d1u&@tow3y6jkqckf94z7#tton95k!p53k9_9$c_ah+3k=a*y'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 
 # Application definition
 
@@ -55,7 +62,9 @@ INSTALLED_APPS = [
 
 
 ]
-
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -75,7 +84,9 @@ CORS_ALLOW_ALL_ORIGINS = True
  #   "http://localhost:3000",  
 #]
 
-
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 
 ROOT_URLCONF = 'app.urls'
 
@@ -98,6 +109,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 
 
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
