@@ -176,6 +176,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
     'SLIDING_TOKEN_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
     'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
+    'SIGNING_KEY':SECRET_KEY,
 }
 
 AUTH_USER_MODEL = 'usersApp.User'
