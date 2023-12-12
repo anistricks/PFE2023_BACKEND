@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 import sys
-
+from datetime  import timedelta
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -164,3 +164,20 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Durée de validité du jeton
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),  # Durée de validité du rafraîchissement
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=1),  # Durée de validité du jeton rafraîchi
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
+    'SLIDING_TOKEN_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),  # Période de grâce pour le rafraîchissement
+}
+
+AUTH_USER_MODEL = 'usersApp.User'
