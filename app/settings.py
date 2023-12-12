@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 import os
 import sys
+from rest_framework_simplejwt.settings import api_settings
 
 load_dotenv()
 
@@ -28,6 +29,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY =os.environ.get('SECRET_KEY') 
+
+api_settings.SIGNING_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
