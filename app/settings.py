@@ -19,7 +19,7 @@ print("Before loading :",  os.environ.get('SECRET_KEY'))
 print("Before loading :",  os.environ.get('SECRET_KEY'))
 print("Before loading :",  os.environ.get('SECRET_KEY'))
 if os.getenv('SECRET_KEY') is None:
-    #
+    
     load_dotenv()
 
 
