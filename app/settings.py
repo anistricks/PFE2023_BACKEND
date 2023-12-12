@@ -102,15 +102,15 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 test_true = "manage.py" in sys.argv and "test" in sys.argv
 
-if test_true:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
+#if test_true:
+#    DATABASES = {
+#        'default': {
+#            'ENGINE': 'django.db.backends.sqlite3',
+#            'NAME': BASE_DIR / 'db.sqlite3',
+#        }
+#    }
+#else:
+DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
             'NAME': os.environ.get('NAME'),
@@ -119,7 +119,7 @@ else:
             'HOST': os.environ.get('HOST'),
             'PORT': os.environ.get('PORT'),
         }
-    }
+    }   
 
 
 # Password validation
