@@ -13,30 +13,21 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 import sys
-import environ
 from datetime  import timedelta
-
-
-
-
-env =environ.Env(
-   DEBUG=(bool,False)
-)
-
+load_dotenv()
+print(os.getenv('SECRET_KEY'))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#load_dotenv()
-environ.Env.read_env(os.path.join(BASE_DIR,'.env'))
-
+print(os.getenv('SECRET_KEY'))
 # Quick-start development settings - unsuitable for production
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY =os.environ.get('SECRET_KEY') 
-SECRET_KEY = 'django-insecure-4d1u&@tow3y6jkqckf94z7#tton95k!p53k9_9$c_ah+3k=a*y'
+SECRET_KEY =os.environ.get('SECRET_KEY') 
+print(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
