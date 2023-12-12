@@ -4,6 +4,25 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import User
 from .serializers import UserSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from django.contrib.auth import authenticate
+
+class LoginView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response({"error": "Le nom d'utilisateur et le mot de passe sont obligatoires."},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is None:
+            return Response({"error": "Les informations d'identification ne sont pas valides."},
+                            status=status.HTTP_401_UNAUTHORIZED)
+
+        return super().post(request, *args, **kwargs)
 
 class UserList(APIView):
    

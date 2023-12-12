@@ -22,6 +22,8 @@ from clientsApp import urls as clientUrls
 from commandesApp import urls as commandeUrls
 from itinerairesApp import urls as itineraireUrls
 from livraisonsApp import urls as livraisonUrls
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 # test pipeline commit
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,6 +32,8 @@ urlpatterns = [
     path('clients/', include(clientUrls)),
     path('commandes/',include(commandeUrls)),
     path('itineraires/',include(itineraireUrls)),
-    path('livraisons/',include(livraisonUrls))
-   
+    path('livraisons/',include(livraisonUrls)),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
 ]
