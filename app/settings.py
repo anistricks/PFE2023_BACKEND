@@ -105,7 +105,6 @@ test_true = "manage.py" in sys.argv and "test" in sys.argv
 if test_true:
     DATABASES = {
         'default': {
-            'SECRET_KEY' : os.environ.get('SECRET_KEY'),
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
