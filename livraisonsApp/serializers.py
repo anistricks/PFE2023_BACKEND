@@ -9,7 +9,7 @@ class LigneLivraisonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LigneLivraison
-        fields = ['article', 'quantite']
+        fields = ['article', 'quantite','isModified']
 
 class LivraisonSerializer(serializers.ModelSerializer):
     client = ClientSerializer()
@@ -17,4 +17,4 @@ class LivraisonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Livraison
-        fields = ['id', 'client', 'date_livraison', 'status', 'lignes_livraison']
+        fields = ['id', 'client', 'date_livraison', 'status','isModified', 'lignes_livraison']
