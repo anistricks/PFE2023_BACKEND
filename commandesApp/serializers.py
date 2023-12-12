@@ -18,4 +18,4 @@ class CommandeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Commande
-        fields = ['id', 'client', 'date_commande', 'status', 'lignes_commande']
+        fields = ['id', 'client', 'date_commande', 'lignes_commande']
