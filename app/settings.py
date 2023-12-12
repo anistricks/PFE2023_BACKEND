@@ -18,8 +18,13 @@ from datetime  import timedelta
 print("Before loading :",  os.environ.get('SECRET_KEY'))
 print("Before loading :",  os.environ.get('SECRET_KEY'))
 print("Before loading :",  os.environ.get('SECRET_KEY'))
-if not os.getenv('SECRET_KEY'):
+if os.getenv('SECRET_KEY') is None:
+    #
     load_dotenv()
+
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
 print("After loading :",  os.environ.get('SECRET_KEY'))
 print("After loading :",  os.environ.get('SECRET_KEY'))
 print("After loading :",  os.environ.get('SECRET_KEY'))
