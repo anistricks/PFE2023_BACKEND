@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_simplejwt',
     'corsheaders',
     'usersApp',
     'articlesApp',
@@ -169,12 +168,12 @@ REST_FRAMEWORK = {
     ),
 }
 
-#SIMPLE_JWT = {
-  #  'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-   #  'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-   #  'SLIDING_TOKEN_LIFETIME': timedelta(days=1),
-   #  'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),
-   #  'SIGNING_KEY': SECRET_KEY,
-# }
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),
+    'SIGNING_KEY': SECRET_KEY,
+}
 
 AUTH_USER_MODEL = 'usersApp.User'
