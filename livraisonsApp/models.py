@@ -12,6 +12,7 @@ class Livraison(models.Model):
         ('Livrée', 'Livrée'),
     ]
     status = models.CharField(max_length=20, choices=status_choices, default='En cours')
+    isModified = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Livraison pour {self.client.nom} - Statut: {self.status}"
@@ -20,6 +21,8 @@ class LigneLivraison(models.Model):
     livraison = models.ForeignKey(Livraison, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     quantite = models.PositiveIntegerField()
+    isModified = models.BooleanField(default=False)
+    
 
     def __str__(self):
         return f"{self.quantite} x {self.article.nom} dans la livraison {self.livraison.id}"
