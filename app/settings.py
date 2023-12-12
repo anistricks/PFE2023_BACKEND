@@ -15,13 +15,13 @@ import os
 import sys
 from datetime  import timedelta
 #test pipeline
-print("Before loading :", os.getenv('NAME'))
-print("Before loading :", os.getenv('NAME'))
-print("Before loading :", os.getenv('NAME'))
+print("Before loading :",  os.environ.get('NAME'))
+print("Before loading :",  os.environ.get('NAME'))
+print("Before loading :",  os.environ.get('NAME'))
 load_dotenv()
-print("After loading :", os.getenv('NAME'))
-print("After loading :", os.getenv('NAME'))
-print("After loading :", os.getenv('NAME'))
+print("After loading :",  os.environ.get('NAME'))
+print("After loading :",  os.environ.get('NAME'))
+print("After loading :",  os.environ.get('NAME'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
