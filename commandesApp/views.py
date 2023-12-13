@@ -4,10 +4,16 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Commande, LigneCommande
-from commandesApp.models import Client
 from .serializers import CommandeSerializer, LigneCommandeSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.exceptions import ValidationError
+from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Commande
+from .serializers import CommandeSerializer
+
+
 class CommandeList(APIView):
     def get(self, request):
         commandes = Commande.objects.all()
@@ -160,17 +166,13 @@ class CommandeClient(ListAPIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    
-from rest_framework.generics import ListAPIView
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Commande
-from .serializers import CommandeSerializer
 
 class GetCommandeByClientId(ListAPIView):
-    serializer_class = CommandeSerializer
-
     def get_queryset(self):
         client_id = self.kwargs['client_id']
         return Commande.objects.filter(client__id=client_id)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        commande_ids = queryset.values_list('id', flat=True)
+        return Response(commande_ids)
