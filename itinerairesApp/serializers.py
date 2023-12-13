@@ -1,12 +1,19 @@
 from rest_framework import serializers
 from .models import Itineraire
-from commandesApp.serializers import CommandeSerializer
-from usersApp.serializers import UserSerializer
+from clientsApp.serializers import ClientSerializer  
+from usersApp.models import User
+from clientsApp.models import Client
 
 class ItineraireSerializer(serializers.ModelSerializer):
-    commandes = CommandeSerializer(many=True, read_only=True)
-    livreur = UserSerializer()
+    clients = ClientSerializer(many=True, read_only=True)
+    clients_ids = serializers.PrimaryKeyRelatedField(
+        many=True, 
+        write_only=True, 
+        queryset=Client.objects.all(), 
+        source='clients'
+    )
+    livreur = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
 
     class Meta:
         model = Itineraire
-        fields = ['id', 'commandes', 'livreur', 'status']
+        fields = ['id', 'clients', 'livreur', 'status', 'clients_ids']

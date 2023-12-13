@@ -84,24 +84,34 @@ class ArticlesByLivraisonList(ListAPIView):
         livraison_id = self.kwargs['livraison_id']
         return LigneLivraison.objects.filter(livraison__id=livraison_id)
     def post(self, request, livraison_id):
-        article_id = request.data.get('article')
-        quantite = request.data.get('quantite')
+        lignes_data = request.data
 
-       
-        if not article_id:
-            raise ValidationError("L'article doit être spécifié avec un ID.")
+        # Vérifier que les données sont une liste
+        if not isinstance(lignes_data, list):
+            raise ValidationError("Les données doivent être une liste d'articles.")
 
-       
-        existing_record = LigneLivraison.objects.filter(livraison_id=livraison_id, article_id=article_id).first()
+        created_records = []
 
-        if existing_record:
-            raise ValidationError("Cet article est déjà dans la liste de livraison veuillez la modifier.")
+        for ligne_data in lignes_data:
+            article_id = ligne_data.get('article')
+            quantite = ligne_data.get('quantite')
 
-        serializer = LigneLivraisonSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(livraison_id=livraison_id)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if not article_id:
+                raise ValidationError("L'article doit être spécifié avec un ID.")
+
+            existing_record = LigneLivraison.objects.filter(livraison_id=livraison_id, article_id=article_id).first()
+
+            if existing_record:
+                raise ValidationError("L'article ID {} est déjà dans la liste de livraison. Veuillez modifier la quantité si nécessaire.".format(article_id))
+
+            serializer = LigneLivraisonSerializer(data=ligne_data)
+            if serializer.is_valid():
+                created_record = serializer.save(livraison_id=livraison_id)
+                created_records.append(created_record)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response([LigneLivraisonSerializer(record).data for record in created_records], status=status.HTTP_201_CREATED)
     
     def put(self, request, livraison_id):
         article_id = request.data.get('article')

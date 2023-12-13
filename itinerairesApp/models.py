@@ -1,9 +1,10 @@
 from django.db import models
 from commandesApp.models import Commande
 from usersApp.models import User
+from clientsApp.models  import Client
 
 class Itineraire(models.Model):
-    commandes = models.ManyToManyField(Commande, blank=True)
+    clients = models.ManyToManyField(Client, blank=True)
     livreur = models.ForeignKey(User, on_delete=models.CASCADE)
     status_choices = [
         ('En attente', 'En attente'),

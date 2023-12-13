@@ -174,4 +174,4 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
 }
 
-AUTH_USER_MODEL = 'usersApp.User'
+#AUTH_USER_MODEL = 'usersApp.User'
