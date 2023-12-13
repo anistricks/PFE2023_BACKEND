@@ -162,3 +162,15 @@ class CommandeClient(ListAPIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
     
     
+from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Commande
+from .serializers import CommandeSerializer
+
+class GetCommandeByClientId(ListAPIView):
+    serializer_class = CommandeSerializer
+
+    def get_queryset(self):
+        client_id = self.kwargs['client_id']
+        return Commande.objects.filter(client__id=client_id)
