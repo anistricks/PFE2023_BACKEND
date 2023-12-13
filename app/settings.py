@@ -31,15 +31,13 @@ print(os.environ.get('SECRET_KEY') )
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY ='django-insecure-4d1u&@tow3y6jkqckf94z7#tton95k!p53k9_9$c_ah+3k=a*y'
+SECRET_KEY =os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
+
 
 # Application definition
 
@@ -62,9 +60,7 @@ INSTALLED_APPS = [
 
 
 ]
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,9 +80,6 @@ CORS_ALLOW_ALL_ORIGINS = True
  #   "http://localhost:3000",  
 #]
 
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
 
 ROOT_URLCONF = 'app.urls'
 
@@ -109,9 +102,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application'
 
 
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -136,15 +127,7 @@ else:
         }
     }   
 
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
-print(os.environ.get('SECRET_KEY') )
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -190,13 +173,18 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
-
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
     'SLIDING_TOKEN_LIFETIME': timedelta(days=1),
     'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(minutes=5),
-    'SIGNING_KEY': SECRET_KEY,
+    'SIGNING_KEY': os.environ.get('SECRET_KEY'),
 }
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
+print(os.environ.get('SECRET_KEY') )
 
 AUTH_USER_MODEL = 'usersApp.User'
