@@ -20,8 +20,21 @@ class CommandeList(APIView):
             existing_commande = Commande.objects.filter(client=client_id).exists()
             if existing_commande:
                 raise ValidationError("Ce client a déjà une commande en cours. Veuillez la modifier.")
+            
+           
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+           
+            nouvelle_commande_id = serializer.instance.id
+
+           
+            response_data = {
+                "id_commande": nouvelle_commande_id,
+                "message": "Commande créée avec succès."
+            }
+
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommandeDetail(APIView):
@@ -87,13 +100,43 @@ class ArticlesByCommandeList(ListAPIView):
     def get_queryset(self):
         commande_id = self.kwargs['commande_id']
         return LigneCommande.objects.filter(commande__id=commande_id)   
-    
-class AjouterLigneCommande(APIView):
     def post(self, request, commande_id):
         commande = Commande.objects.get(id=commande_id)
         serializer = LigneCommandeSerializer(data=request.data)
 
         if serializer.is_valid():
+           
+            article_id = serializer.validated_data['article'].id
+            existing_ligne_commande = LigneCommande.objects.filter(commande=commande, article=article_id).exists()
+            
+            if existing_ligne_commande:
+                return Response({"detail": "Cette ligne de commande existe déjà pour cette commande."}, status=status.HTTP_400_BAD_REQUEST)
+            
             ligne_commande = serializer.save(commande=commande)
             return Response(LigneCommandeSerializer(ligne_commande).data, status=status.HTTP_201_CREATED)
+        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request, commande_id):
+        commande = Commande.objects.get(id=commande_id)
+        article_id = request.data.get('article', None)
+        quantite = request.data.get('quantite', None)
+
+        if article_id is not None and quantite is not None:
+            try:
+               
+                lignes_commande = LigneCommande.objects.filter(commande=commande, article=article_id)
+                
+                if lignes_commande.exists():
+                    
+                    ligne_commande = lignes_commande.first()
+                    ligne_commande.quantite = quantite
+                    ligne_commande.save()
+                    serializer = LigneCommandeSerializer(ligne_commande)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                else:
+                    return Response({"detail": "La ligne de commande n'existe pas pour cet article."}, status=status.HTTP_404_NOT_FOUND)
+            except LigneCommande.DoesNotExist:
+                return Response({"detail": "La ligne de commande n'existe pas pour cet article."}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({"detail": "L'article et la quantité sont requis."}, status=status.HTTP_400_BAD_REQUEST)
+    
