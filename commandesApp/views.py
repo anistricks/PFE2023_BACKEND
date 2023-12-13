@@ -130,27 +130,36 @@ class ArticlesByCommandeList(ListAPIView):
             return Response({"detail": "La requête doit contenir une liste d'articles avec quantités."}, status=status.HTTP_400_BAD_REQUEST)
     def put(self, request, commande_id):
         commande = Commande.objects.get(id=commande_id)
-        article_id = request.data.get('article', None)
-        quantite = request.data.get('quantite', None)
+        articles_data = request.data.get('articles', None)
 
-        if article_id is not None and quantite is not None:
+        if articles_data is not None:
             try:
-               
-                lignes_commande = LigneCommande.objects.filter(commande=commande, article=article_id)
+                for article_info in articles_data:
+                    article_id = article_info.get('article', None)
+                    quantite = article_info.get('quantite', None)
+
+                    if article_id is not None and quantite is not None:
+                        lignes_commande = LigneCommande.objects.filter(commande=commande, article=article_id)
+
+                        if lignes_commande.exists():
+                            ligne_commande = lignes_commande.first()
+                            ligne_commande.quantite = quantite
+                            ligne_commande.save()
+                        else:
+                           
+                            LigneCommande.objects.create(commande=commande, article=article_id, quantite=quantite)
+                    else:
+                        return Response({"detail": "L'article et la quantité sont requis."}, status=status.HTTP_400_BAD_REQUEST)
+
                 
-                if lignes_commande.exists():
-                    
-                    ligne_commande = lignes_commande.first()
-                    ligne_commande.quantite = quantite
-                    ligne_commande.save()
-                    serializer = LigneCommandeSerializer(ligne_commande)
-                    return Response(serializer.data, status=status.HTTP_200_OK)
-                else:
-                    return Response({"detail": "La ligne de commande n'existe pas pour cet article."}, status=status.HTTP_404_NOT_FOUND)
+                updated_articles = LigneCommande.objects.filter(commande=commande)
+                serializer = LigneCommandeSerializer(updated_articles, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
             except LigneCommande.DoesNotExist:
                 return Response({"detail": "La ligne de commande n'existe pas pour cet article."}, status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response({"detail": "L'article et la quantité sont requis."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "La liste des articles et quantités est requise."}, status=status.HTTP_400_BAD_REQUEST)
 
 class CommandeClient(ListAPIView):
     serializer_class = LigneCommandeSerializer
