@@ -113,24 +113,46 @@ class ArticlesByLivraisonList(ListAPIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response([LigneLivraisonSerializer(record).data for record in created_records], status=status.HTTP_201_CREATED)
-    
     def put(self, request, livraison_id):
-        article_id = request.data.get('article')
-        quantite = request.data.get('quantite')
+        lignes_data = request.data
 
-        if not article_id:
-            raise ValidationError("L'article doit être spécifié avec un ID.")
+        if not isinstance(lignes_data, list):
+            raise ValidationError("Les données doivent être une liste d'articles.")
 
-        existing_record = LigneLivraison.objects.filter(livraison_id=livraison_id, article_id=article_id).first()
+        updated_records = []
+        seen_articles = set()  # Utilisez un ensemble pour suivre les articles déjà traités
 
-        if not existing_record:
-            raise ValidationError("Cet article n'existe pas dans la liste de livraison.")
+        for ligne_data in lignes_data:
+            article_id = ligne_data.get('article')
+            quantite = ligne_data.get('quantite')
 
-        serializer = LigneLivraisonSerializer(existing_record, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if not article_id:
+                raise ValidationError("L'article doit être spécifié avec un ID.")
+
+            # Vérifiez si l'article a déjà été traité
+            if article_id in seen_articles:
+                ligne_data['isModified'] = True  # Marquez l'article comme étant modifié
+            else:
+                seen_articles.add(article_id)  # Ajoutez l'article à l'ensemble des articles traités
+                ligne_data['isModified'] = False
+
+            # Créez ou mettez à jour l'enregistrement
+                existing_record = LigneLivraison.objects.filter(livraison_id=livraison_id, article_id=article_id).first()
+            if existing_record:
+                serializer = LigneLivraisonSerializer(existing_record, data=ligne_data)
+            else:
+                serializer = LigneLivraisonSerializer(data=ligne_data)
+
+            if serializer.is_valid():
+                updated_record = serializer.save(livraison_id=livraison_id)
+                updated_records.append(updated_record)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response([LigneLivraisonSerializer(record).data for record in updated_records], status=status.HTTP_200_OK)
+    
+    
+
 
 
 class GetLivraisonByClientId(ListAPIView):
