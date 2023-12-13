@@ -20,6 +20,7 @@ class ArticleList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ArticleDetail(APIView):
     def get_object(self, article_id):
         return get_object_or_404(Article, id=article_id)
