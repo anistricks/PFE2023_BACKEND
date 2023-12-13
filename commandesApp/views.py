@@ -99,8 +99,8 @@ class ArticlesByCommandeList(ListAPIView):
     serializer_class = LigneCommandeSerializer
 
     def get_queryset(self):
-        client_id = self.kwargs['client_id']
-        return LigneCommande.objects.filter(client_id=client_id)   
+        command_id = self.kwargs['command_id']
+        return LigneCommande.objects.filter(command_id=command_id)   
     def post(self, request, commande_id):
         commande = Commande.objects.get(id=commande_id)
         serializer = LigneCommandeSerializer(data=request.data)
