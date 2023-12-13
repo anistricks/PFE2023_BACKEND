@@ -5,7 +5,8 @@ from rest_framework import status
 from .models import Livraison, LigneLivraison
 from .serializers import LivraisonSerializer, LigneLivraisonSerializer
 from rest_framework.generics import ListAPIView
-
+from rest_framework.exceptions import ValidationError
+from articlesApp.models import Article
 class LivraisonList(APIView):
     def get(self, request):
         livraisons = Livraison.objects.all()
@@ -82,3 +83,44 @@ class ArticlesByLivraisonList(ListAPIView):
     def get_queryset(self):
         livraison_id = self.kwargs['livraison_id']
         return LigneLivraison.objects.filter(livraison__id=livraison_id)
+    def post(self, request, livraison_id):
+        article_id = request.data.get('article')
+        quantite = request.data.get('quantite')
+
+       
+        if not article_id:
+            raise ValidationError("L'article doit être spécifié avec un ID.")
+
+       
+        existing_record = LigneLivraison.objects.filter(livraison_id=livraison_id, article_id=article_id).first()
+
+        if existing_record:
+            raise ValidationError("Cet article est déjà dans la liste de livraison veuillez la modifier.")
+
+        serializer = LigneLivraisonSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(livraison_id=livraison_id)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request, livraison_id):
+        article_id = request.data.get('article')
+        quantite = request.data.get('quantite')
+
+        if not article_id:
+            raise ValidationError("L'article doit être spécifié avec un ID.")
+
+        existing_record = LigneLivraison.objects.filter(livraison_id=livraison_id, article_id=article_id).first()
+
+        if not existing_record:
+            raise ValidationError("Cet article n'existe pas dans la liste de livraison.")
+
+        serializer = LigneLivraisonSerializer(existing_record, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+

@@ -3,9 +3,10 @@ from .models import Livraison, LigneLivraison
 from clientsApp.serializers import ClientSerializer
 from usersApp.serializers import UserSerializer
 from articlesApp.serializers import ArticleSerializer
+from articlesApp.models import Article
 
 class LigneLivraisonSerializer(serializers.ModelSerializer):
-    article = ArticleSerializer()
+    article = serializers.PrimaryKeyRelatedField(queryset=Article.objects.all())
 
     class Meta:
         model = LigneLivraison
