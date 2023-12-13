@@ -14,7 +14,7 @@ class LigneCommandeSerializer(serializers.ModelSerializer):
         fields = ['article', 'quantite']
 
 class CommandeSerializer(serializers.ModelSerializer):
-    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all())
+    client = ClientSerializer()
     lignes_commande = LigneCommandeSerializer(many=True, read_only=True)
 
     class Meta:

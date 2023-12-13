@@ -6,6 +6,7 @@ from rest_framework import status
 from .models import Commande, LigneCommande
 from .serializers import CommandeSerializer, LigneCommandeSerializer
 from rest_framework.generics import ListAPIView
+from rest_framework.exceptions import ValidationError
 class CommandeList(APIView):
     def get(self, request):
         commandes = Commande.objects.all()
@@ -15,6 +16,10 @@ class CommandeList(APIView):
     def post(self, request):
         serializer = CommandeSerializer(data=request.data)
         if serializer.is_valid():
+            client_id = serializer.validated_data['client'].id
+            existing_commande = Commande.objects.filter(client=client_id).exists()
+            if existing_commande:
+                raise ValidationError("Ce client a déjà une commande en cours. Veuillez la modifier.")
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
