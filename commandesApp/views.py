@@ -147,6 +147,11 @@ class ArticlesByCommandeList(ListAPIView):
             return Response({"detail": "L'article et la quantité sont requis."}, status=status.HTTP_400_BAD_REQUEST)
 
 class CommandeClient(ListAPIView):
+    serializer_class = LigneCommandeSerializer
+    def get_queryset(self):
+        client_id = self.kwargs['client_id']
+        return LigneCommande.objects.filter(commande__client_id=client_id)
+      
     def delete(self, request, client_id):
         commandes = Commande.objects.filter(client__id=client_id)
         
@@ -155,3 +160,5 @@ class CommandeClient(ListAPIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    
