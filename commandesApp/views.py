@@ -87,3 +87,13 @@ class ArticlesByCommandeList(ListAPIView):
     def get_queryset(self):
         commande_id = self.kwargs['commande_id']
         return LigneCommande.objects.filter(commande__id=commande_id)   
+    
+class AjouterLigneCommande(APIView):
+    def post(self, request, commande_id):
+        commande = Commande.objects.get(id=commande_id)
+        serializer = LigneCommandeSerializer(data=request.data)
+
+        if serializer.is_valid():
+            ligne_commande = serializer.save(commande=commande)
+            return Response(LigneCommandeSerializer(ligne_commande).data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
