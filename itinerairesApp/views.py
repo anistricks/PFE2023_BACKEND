@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Itineraire
 from .serializers import ItineraireSerializer
+from commandesApp.models import Commande,LigneCommande
+from livraisonsApp.models import Livraison,LigneLivraison
+from livraisonsApp.serializers import LivraisonSerializer
 
 class ItineraireList(APIView):
     def get(self, request):
@@ -14,9 +17,30 @@ class ItineraireList(APIView):
     def post(self, request):
         serializer = ItineraireSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            itineraire = serializer.save()
+
+            for client in itineraire.clients.all():
+                commandes = Commande.objects.filter(client=client)
+
+                for commande in commandes:
+                    
+                    livraison = Livraison.objects.create(
+                        client=client,
+                       
+                    )
+
+                   
+                    for ligne_commande in LigneCommande.objects.filter(commande=commande):
+                        LigneLivraison.objects.create(
+                            livraison=livraison,
+                            article=ligne_commande.article,
+                            quantite=ligne_commande.quantite,
+                           
+                        )
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ItineraireDetail(APIView):
     def get_object(self, itineraire_id):
