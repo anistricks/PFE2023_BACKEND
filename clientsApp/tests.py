@@ -28,7 +28,7 @@ class ClientTests(TestCase):
 
     def test_update_client(self):
         url = reverse('client-detail', args=[self.client_instance.id])
-        updated_data = {'nom': 'Updated Client', 'adresse_complete': '789 Updated Street'}
+        updated_data = {'nom': 'Updated Client', 'adresse_complete': '789 new address'}
         response = self.client.put(url, updated_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Client.objects.get(id=self.client_instance.id).nom, 'Updated Client')
