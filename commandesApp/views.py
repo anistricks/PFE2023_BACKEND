@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Commande, LigneCommande
+from commandesApp.models import Client
 from .serializers import CommandeSerializer, LigneCommandeSerializer
 from rest_framework.generics import ListAPIView
 from rest_framework.exceptions import ValidationError
@@ -99,7 +100,7 @@ class ArticlesByCommandeList(ListAPIView):
 
     def get_queryset(self):
         commande_id = self.kwargs['commande_id']
-        return LigneCommande.objects.filter(commande__id=commande_id)   
+        return LigneCommande.objects.filter(commande_id=commande_id)   
     def post(self, request, commande_id):
         commande = Commande.objects.get(id=commande_id)
         serializer = LigneCommandeSerializer(data=request.data)
@@ -139,4 +140,13 @@ class ArticlesByCommandeList(ListAPIView):
                 return Response({"detail": "La ligne de commande n'existe pas pour cet article."}, status=status.HTTP_404_NOT_FOUND)
         else:
             return Response({"detail": "L'article et la quantité sont requis."}, status=status.HTTP_400_BAD_REQUEST)
-    
+
+class CommandeClient(ListAPIView):
+    def delete(self, request, client_id):
+        commandes = Commande.objects.filter(client__id=client_id)
+        
+        if commandes.exists():
+            commandes.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
