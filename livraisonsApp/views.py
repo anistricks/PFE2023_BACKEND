@@ -133,5 +133,3 @@ class GetLivraisonByClientId(ListAPIView):
     def get_queryset(self):
         client_id = self.kwargs['client_id']
         return Livraison.objects.filter(client__id=client_id)
-
-
