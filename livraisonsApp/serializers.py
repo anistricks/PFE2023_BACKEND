@@ -4,6 +4,7 @@ from clientsApp.serializers import ClientSerializer
 from usersApp.serializers import UserSerializer
 from articlesApp.serializers import ArticleSerializer
 from articlesApp.models import Article
+from clientsApp.models import Client
 
 class LigneLivraisonSerializer(serializers.ModelSerializer):
     article = serializers.PrimaryKeyRelatedField(queryset=Article.objects.all())
@@ -13,7 +14,7 @@ class LigneLivraisonSerializer(serializers.ModelSerializer):
         fields = ['article', 'quantite','isModified']
 
 class LivraisonSerializer(serializers.ModelSerializer):
-    client = ClientSerializer()
+    client = serializers.PrimaryKeyRelatedField(queryset=Client.objects.all())
     lignes_livraison = LigneLivraisonSerializer(many=True, read_only=True)
 
     class Meta:
