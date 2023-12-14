@@ -2,6 +2,7 @@
 from django.db import models
 from clientsApp.models import Client
 from usersApp.models import User
+from django.core.validators import MinValueValidator
 from articlesApp.models import Article
 
 class Commande(models.Model):
@@ -30,7 +31,7 @@ class Commande(models.Model):
 class LigneCommande(models.Model):
     commande = models.ForeignKey(Commande, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    quantite = models.PositiveIntegerField()
+    quantite = models.FloatField(validators=[MinValueValidator(0.0)])
 
     def __str__(self):
         return f"{self.quantite} x {self.article.nom} dans la commande {self.commande.id}"
