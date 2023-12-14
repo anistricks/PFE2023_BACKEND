@@ -6,7 +6,6 @@ from rest_framework import status
 from .models import Article
 from .serializers import ArticleSerializer
 
-# Create your views here.
 class ArticleList(APIView):
     def get(self, request):
         articles = Article.objects.all()
