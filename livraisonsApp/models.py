@@ -1,6 +1,7 @@
 from django.db import models
 from clientsApp.models import Client
 from usersApp.models import User
+from django.core.validators import MinValueValidator
 from articlesApp.models import Article
 
 class Livraison(models.Model):
@@ -20,7 +21,7 @@ class Livraison(models.Model):
 class LigneLivraison(models.Model):
     livraison = models.ForeignKey(Livraison, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    quantite = models.PositiveIntegerField()
+    quantite = models.FloatField(validators=[MinValueValidator(0.0)])
     isModified = models.BooleanField(default=False)
     
 
