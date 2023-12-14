@@ -1,9 +1,6 @@
 
 from rest_framework import serializers
 from .models import Commande, LigneCommande
-from clientsApp.serializers import ClientSerializer
-from usersApp.serializers import UserSerializer
-from articlesApp.serializers import ArticleSerializer
 from clientsApp.models import Client
 from articlesApp.models import Article
 

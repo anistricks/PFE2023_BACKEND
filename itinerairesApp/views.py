@@ -6,7 +6,7 @@ from .models import Itineraire
 from .serializers import ItineraireSerializer
 from commandesApp.models import Commande,LigneCommande
 from livraisonsApp.models import Livraison,LigneLivraison
-from livraisonsApp.serializers import LivraisonSerializer
+
 
 class ItineraireList(APIView):
     def get(self, request):

@@ -1,5 +1,4 @@
 from django.db import models
-from commandesApp.models import Commande
 from usersApp.models import User
 from clientsApp.models  import Client
 

@@ -22,7 +22,7 @@ from clientsApp import urls as clientUrls
 from commandesApp import urls as commandeUrls
 from itinerairesApp import urls as itineraireUrls
 from livraisonsApp import urls as livraisonUrls
-# test pipeline commit test
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/',include(userUrls)),

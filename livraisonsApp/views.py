@@ -87,7 +87,7 @@ class ArticlesByLivraisonList(ListAPIView):
     def post(self, request, livraison_id):
         lignes_data = request.data
 
-        # Vérifier que les données sont une liste
+       
         if not isinstance(lignes_data, list):
             raise ValidationError("Les données doivent être une liste d'articles.")
 
@@ -120,7 +120,7 @@ class ArticlesByLivraisonList(ListAPIView):
             raise ValidationError("Les données doivent être une liste d'articles.")
 
         updated_records = []
-        seen_articles = set()  # Utilisez un ensemble pour suivre les articles déjà traités
+        seen_articles = set()  
 
         for ligne_data in lignes_data:
             article_id = ligne_data.get('article')
@@ -129,14 +129,14 @@ class ArticlesByLivraisonList(ListAPIView):
             if not article_id:
                 raise ValidationError("L'article doit être spécifié avec un ID.")
 
-            # Vérifiez si l'article a déjà été traité
+            
             if article_id in seen_articles:
-                ligne_data['isModified'] = True  # Marquez l'article comme étant modifié
+                ligne_data['isModified'] = True  
             else:
-                seen_articles.add(article_id)  # Ajoutez l'article à l'ensemble des articles traités
+                seen_articles.add(article_id)  
                 ligne_data['isModified'] = False
 
-            # Créez ou mettez à jour l'enregistrement
+            
                 existing_record = LigneLivraison.objects.filter(livraison_id=livraison_id, article_id=article_id).first()
             if existing_record:
                 serializer = LigneLivraisonSerializer(existing_record, data=ligne_data)

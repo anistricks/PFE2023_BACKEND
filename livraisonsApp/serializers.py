@@ -1,8 +1,5 @@
 from rest_framework import serializers
 from .models import Livraison, LigneLivraison
-from clientsApp.serializers import ClientSerializer
-from usersApp.serializers import UserSerializer
-from articlesApp.serializers import ArticleSerializer
 from articlesApp.models import Article
 from clientsApp.models import Client
 

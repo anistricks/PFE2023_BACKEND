@@ -1,6 +1,5 @@
 from django.db import models
 from clientsApp.models import Client
-from usersApp.models import User
 from django.core.validators import MinValueValidator
 from articlesApp.models import Article
 
