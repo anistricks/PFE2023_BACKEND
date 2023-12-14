@@ -1,4 +1,3 @@
-
 from django.db import models
 from clientsApp.models import Client
 from django.core.validators import MinValueValidator
