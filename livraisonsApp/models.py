@@ -7,11 +7,11 @@ class Livraison(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     date_livraison = models.DateTimeField(auto_now_add=True)
     status_choices = [
-        ('En cours', 'En cours'),
         ('En préparation', 'En préparation'),
+        ('En cours', 'En cours'),
         ('Livrée', 'Livrée'),
     ]
-    status = models.CharField(max_length=20, choices=status_choices, default='En cours')
+    status = models.CharField(max_length=20, choices=status_choices, default='En préparation')
     isModified = models.BooleanField(default=False)
 
     def __str__(self):
