@@ -65,3 +65,7 @@ class ItineraireDetail(APIView):
 
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, itineraire_id):
+        itineraire = self.get_object(itineraire_id)
+        itineraire.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

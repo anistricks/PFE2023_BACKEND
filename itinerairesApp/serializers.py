@@ -10,9 +10,10 @@ class ItineraireSerializer(serializers.ModelSerializer):
         many=True, 
         write_only=True, 
         queryset=Client.objects.all(), 
-        source='clients'
+        source='clients',
+        required=False
     )
-    livreur = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    livreur = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False)
 
     class Meta:
         model = Itineraire
