@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Commande
 from .serializers import CommandeSerializer
+from articlesApp.models import  Article
 
 
 class CommandeList(APIView):
@@ -20,28 +21,40 @@ class CommandeList(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+       
         serializer = CommandeSerializer(data=request.data)
+
         if serializer.is_valid():
-            client_id = serializer.validated_data['client'].id
-            existing_commande = Commande.objects.filter(client=client_id).exists()
-            if existing_commande:
-                raise ValidationError("Ce client a déjà une commande en cours. Veuillez la modifier.")
             
-           
-            serializer.save()
+            client = serializer.validated_data['client']
 
            
-            nouvelle_commande_id = serializer.instance.id
+            commande = serializer.save()
 
            
-            response_data = {
-                "id_commande": nouvelle_commande_id,
-                "message": "Commande créée avec succès."
-            }
+            articles_disponibles = Article.objects.all()
 
-            return Response(response_data, status=status.HTTP_201_CREATED)
-        
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            
+            lignes_commande = []
+            for article in articles_disponibles:
+                ligne_commande_data = {
+                    'article': article,
+                    'quantite': 0.0  
+                }
+                lignes_commande.append(ligne_commande_data)
+
+            
+            for ligne_commande_data in lignes_commande:
+                ligne_commande_data['commande'] = commande
+            lignes_commande_objects = LigneCommande.objects.bulk_create([LigneCommande(**data) for data in lignes_commande])
+
+            
+            if len(lignes_commande_objects) == len(lignes_commande):
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            else:
+                raise ValidationError("Erreur lors de la création des lignes de commande.")
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommandeDetail(APIView):
     def get_object(self, commande_id):
